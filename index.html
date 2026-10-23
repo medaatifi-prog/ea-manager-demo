@@ -1,0 +1,91 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EA Manager — Demo</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172033}
+    header{background:#087fce;color:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    header h1{font-size:23px;margin:0 0 5px}
+    header p{margin:0;font-size:13px}
+    .demo{background:#fff2c6;color:#754b00;border-radius:20px;padding:8px 12px;font-weight:bold;font-size:12px}
+    .layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 75px)}
+    nav{background:white;padding:15px;border-left:1px solid #e2e8f0}
+    nav button{display:block;width:100%;border:0;background:white;text-align:right;padding:13px 12px;margin-bottom:5px;border-radius:8px;font-size:15px;cursor:pointer;color:#26354a}
+    nav button:hover,nav button.active{background:#e0f2fe;color:#0369a1;font-weight:bold}
+    main{padding:24px;min-width:0}
+    .notice{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:13px;border-radius:10px;margin-bottom:20px;font-size:14px;line-height:1.7}
+    h2{margin-top:0}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:18px 0}
+    .card{background:white;padding:19px;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 5px #00000008}
+    .card span{color:#64748b;font-size:14px}
+    .card strong{display:block;font-size:25px;margin-top:12px;color:#087fce}
+    .panel{background:white;border:1px solid #e2e8f0;border-radius:12px;padding:18px;margin-top:16px;overflow-x:auto}
+    table{width:100%;border-collapse:collapse;min-width:420px}
+    th,td{padding:12px;text-align:right;border-bottom:1px solid #e2e8f0}
+    th{background:#f8fafc}
+    .tag{background:#dcfce7;color:#166534;padding:5px 9px;border-radius:15px;font-size:12px}
+    .muted{color:#64748b;line-height:1.8}
+    footer{text-align:center;color:#64748b;font-size:12px;padding:18px}
+    @media(max-width:700px){.layout{grid-template-columns:1fr}nav{display:flex;overflow-x:auto;gap:5px;border-left:0;border-bottom:1px solid #e2e8f0;padding:9px}nav button{white-space:nowrap;width:auto;min-width:max-content;margin:0}main{padding:15px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:14px}.card strong{font-size:21px}}
+  </style>
+</head>
+<body>
+<header>
+  <div><h1>EA Manager</h1><p>Electro AATIFI — نظام إدارة المحل</p></div>
+  <span class="demo">نسخة تجريبية · بيانات وهمية</span>
+</header>
+<div class="layout">
+  <nav id="menu">
+    <button class="active" data-page="dashboard">🏠 الرئيسية</button>
+    <button data-page="reception">🧾 الاستقبال</button>
+    <button data-page="workshop">🔧 الورشة</button>
+    <button data-page="devices">📺 الأجهزة</button>
+    <button data-page="products">📦 المنتجات</button>
+    <button data-page="inventory">🗃️ المخزون</button>
+    <button data-page="accounting">💰 المحاسبة</button>
+    <button data-page="bein">📡 beIN</button>
+    <button data-page="iptv">🌐 IPTV</button>
+    <button data-page="mhlaba">🏠 المحلبة</button>
+    <button data-page="requests">📝 طلبات المنتجات</button>
+    <button data-page="settings">⚙️ الإعدادات</button>
+  </nav>
+  <main>
+    <div class="notice">هذه واجهة للعرض فقط. الأرقام والأسماء المعروضة تجريبية وليست بيانات المحل الحقيقية. لا يتم حفظ أي تغيير ولا الاتصال بقاعدة البيانات الأصلية.</div>
+    <section id="content"></section>
+  </main>
+</div>
+<footer>EA Manager Demo · عرض توضيحي مستقل</footer>
+<script>
+const pages={
+dashboard:{title:"لوحة القيادة",desc:"نظرة عامة على نشاط المحل — بيانات تجريبية.",cards:[["أجهزة الاستقبال",12],["أجهزة قيد الإصلاح",4],["طلبات المنتجات",3],["مداخيل تجريبية","2,450 DH"]],rows:[["TV Samsung","قيد الإصلاح","تجريبي"],["TV LG","جاهز للتسليم","تجريبي"],["TV Sony","تم الاستلام","تجريبي"]]},
+reception:{title:"الاستقبال",desc:"تسجيل الأجهزة المستلمة في المحل.",cards:[["أجهزة اليوم",5],["في انتظار التشخيص",2]],rows:[["DEMO-001","Samsung 32 بوصة","استلام تجريبي"],["DEMO-002","LG 43 بوصة","استلام تجريبي"]]},
+workshop:{title:"الورشة",desc:"متابعة أعمال الإصلاح والصيانة.",cards:[["قيد الإصلاح",4],["جاهز",3]],rows:[["DEMO-101","تغيير الإضاءة","قيد الإصلاح"],["DEMO-102","فحص التغذية","جاهز"]]},
+devices:{title:"الأجهزة",desc:"قائمة أجهزة تجريبية.",rows:[["DEMO-001","Samsung","قيد الإصلاح"],["DEMO-002","LG","جاهز"],["DEMO-003","Sony","تم التسليم"]]},
+products:{title:"المنتجات",desc:"عرض توضيحي للمنتجات.",cards:[["منتجات تجريبية",18],["أصناف",7]],rows:[["كابل HDMI","50 DH","متوفر"],["ريموت تلفاز","80 DH","متوفر"],["شاحن","120 DH","متوفر"]]},
+inventory:{title:"المخزون",desc:"حالة مخزون تجريبي.",cards:[["الأصناف",18],["مخزون منخفض",2]],rows:[["كابل HDMI",12,"متوفر"],["ريموت تلفاز",8,"متوفر"]]},
+accounting:{title:"المحاسبة",desc:"ملخص مالي وهمي لا يمثل الحسابات الحقيقية.",cards:[["المداخيل","2,450 DH"],["المصاريف","850 DH"],["الرصيد التجريبي","1,600 DH"]]},
+bein:{title:"beIN",desc:"واجهة تجريبية لمتابعة الاشتراكات.",cards:[["اشتراكات تجريبية",25],["تجديدات اليوم",3]],rows:[["DEMO-B01","Premium","تجريبي"],["DEMO-B02","Mondeal","تجريبي"]]},
+iptv:{title:"IPTV",desc:"عرض توضيحي لإدارة اللوحات والاشتراكات.",cards:[["لوحات تجريبية",4],["مشتركون",36]],rows:[["DEMO-Panel-01","Eagle","تجريبي"],["DEMO-Panel-02","Smart","تجريبي"]]},
+mhlaba:{title:"المحلبة",desc:"واجهة تجريبية مستقلة لعرض القسم.",cards:[["مداخيل تجريبية","3,000 DH"],["مصاريف تجريبية","450 DH"]],rows:[["شريك تجريبي 1","500 DH","مثال"],["شريك تجريبي 2","500 DH","مثال"]]},
+requests:{title:"طلبات المنتجات",desc:"متابعة طلبات تجريبية.",rows:[["REQ-001","ريموت تلفاز","قيد المعالجة"],["REQ-002","كابل HDMI","تم الطلب"]]},
+settings:{title:"الإعدادات",desc:"هذه نسخة عرض فقط؛ الإعدادات الحقيقية غير متاحة.",cards:[["وضع العرض","Demo"],["قاعدة البيانات","غير متصلة"],["تسجيل الدخول","غير مطلوب"]]}
+};
+function render(key){
+const p=pages[key]||pages.dashboard;
+document.querySelectorAll("#menu button").forEach(b=>b.classList.toggle("active",b.dataset.page===key));
+let html=`<h2>${p.title}</h2><p class="muted">${p.desc}</p>`;
+if(p.cards){html+='<div class="cards">'+p.cards.map(c=>`<div class="card"><span>${c[0]}</span><strong>${c[1]}</strong></div>`).join("")+'</div>'}
+if(p.rows){html+='<div class="panel"><h3>بيانات تجريبية</h3><table><thead><tr><th>العنصر</th><th>التفاصيل</th><th>الحالة</th></tr></thead><tbody>'+p.rows.map(r=>`<tr>${r.map((v,i)=>`<td>${i===2?`<span class="tag">${v}</span>`:v}</td>`).join("")}</tr>`).join("")+'</tbody></table></div>'}
+html+='<p class="muted">تنبيه: هذه أمثلة للعرض والتنقل فقط، وليست بيانات فعلية.</p>';
+document.getElementById("content").innerHTML=html;
+}
+document.querySelectorAll("#menu button").forEach(b=>b.addEventListener("click",()=>render(b.dataset.page)));
+render("dashboard");
+</script>
+</body>
+</html>
+```
